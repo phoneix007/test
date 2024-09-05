@@ -6,11 +6,6 @@ pipeline {
     }
   }
   stages {
-      stage('Cleanup') {
-            steps {
-                deleteDir() // Cleans the workspace
-            }
-        }
     stage('Checkout') {
       steps {
         sh 'echo passed'
@@ -66,6 +61,11 @@ pipeline {
                     git commit -m "Update deployment image to version ${BUILD_NUMBER}"
                     git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main
                 '''
+            }
+        }
+      stage('Cleanup') {
+            steps {
+                deleteDir() // Cleans the workspace
             }
         }
     }
