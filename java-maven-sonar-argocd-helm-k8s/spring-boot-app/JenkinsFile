@@ -63,10 +63,10 @@ pipeline {
                 '''
             }
         }
-      stage('Cleanup') {
-            steps {
-                deleteDir() // Cleans the workspace
-            }
+    }
+    stage('Cleanup') {
+        steps {
+             deleteDir() // Cleans the workspace
         }
     }
   }
