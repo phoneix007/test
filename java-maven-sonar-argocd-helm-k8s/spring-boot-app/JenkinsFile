@@ -6,15 +6,10 @@ pipeline {
     }
   }
   stages {
-    stage('Cleanup') {
-       steps {
-         deleteDir() // Cleans the workspace
-         }
-    }
     stage('Checkout') {
       steps {
         sh 'echo passed'
-        //git branch: 'main', url: '<your branch url>'
+        //git branch: 'main', url: 'your github url'
       }
     }
     stage('Build and Test') {
@@ -53,15 +48,15 @@ pipeline {
     stage('Update Deployment File') {
         environment {
             GIT_REPO_NAME = "Jenkins-Zero-To-Hero"
-            GIT_USER_NAME = "phoneix007"
+            GIT_USER_NAME = "Phoneix007"
         }
         steps {
             withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
                 sh '''
-                    git config user.email "ajaysharma520420@gmail.com"
-                    git config user.name "Ajay Sharma"
+                    git config user.email "abhishek.xyz@gmail.com"
+                    git config user.name "Abhishek Veeramalla"
                     BUILD_NUMBER=${BUILD_NUMBER}
-                    sh 'sed -i "s#ajaysharma07/okr-ci-cd:[0-9]\\+#ajaysharma07/okr-ci-cd:${BUILD_NUMBER}#g" java-maven-sonar-argocd-helm-k8s/spring-boot-app-manifests/deployment.yml'
+                    sed -i "s/replaceImageTag/${BUILD_NUMBER}/g" java-maven-sonar-argocd-helm-k8s/spring-boot-app-manifests/deployment.yml
                     git add java-maven-sonar-argocd-helm-k8s/spring-boot-app-manifests/deployment.yml
                     git commit -m "Update deployment image to version ${BUILD_NUMBER}"
                     git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main
@@ -69,7 +64,5 @@ pipeline {
             }
         }
     }
-
-    
   }
 }
