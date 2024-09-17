@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: spring-boot-app
-        image: ajaysharma07/okr-ci-cd:replaceImageTag
+        image: ajaysharma07/okr-ci-cd:117Sep2024
         ports:
         - containerPort: 8080
